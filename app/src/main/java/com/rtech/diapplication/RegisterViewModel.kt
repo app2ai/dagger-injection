@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 
 class RegisterViewModel : ViewModel() {
 
-    // DI Step 2: Create ViewModel
     private var _validateEmailLiveData = MutableLiveData<PatternMatcher>()
     val validateEmailLiveData: LiveData<PatternMatcher> = _validateEmailLiveData
 
@@ -22,6 +21,8 @@ class RegisterViewModel : ViewModel() {
 
     private var _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData
+
+    private val userRegService = UserRegistrationService()
 
     fun validateEmail(text: String, isFocused: Boolean) {
         if (isFocused) {
@@ -53,7 +54,9 @@ class RegisterViewModel : ViewModel() {
     fun registerUser(email: String, pass: String) {
         viewModelScope.launch {
             _loadingLiveData.value = true
-            delay(4000)
+            delay(2500)
+            userRegService.registerUser(email, pass)
+            delay(1500)
             _loadingLiveData.value = false
         }
     }

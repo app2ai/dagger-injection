@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity(), TextWatcher {
         observeData()
     }
 
-    // DI Step 4: observer data
     private fun observeData() {
         rViewModel.validateEmailLiveData.observe(this) { pattern ->
             when (pattern) {
@@ -58,7 +57,6 @@ class MainActivity : AppCompatActivity(), TextWatcher {
         }
     }
 
-    // DI Step 3: Initialise views
     private fun initiateViews() {
         binding.btnRegister.setOnClickListener {
             Toast.makeText(this, "You are registered successfully", Toast.LENGTH_LONG).show()

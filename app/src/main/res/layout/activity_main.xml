@@ -8,7 +8,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
-    <!-- DI Step 1: Layout making -->
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
