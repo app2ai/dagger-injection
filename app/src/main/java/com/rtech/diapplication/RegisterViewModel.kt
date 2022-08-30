@@ -4,6 +4,9 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class RegisterViewModel : ViewModel() {
 
@@ -16,6 +19,9 @@ class RegisterViewModel : ViewModel() {
 
     private var _registerEnableLiveData = MutableLiveData<Boolean>()
     val registerEnableLiveData: LiveData<Boolean> = _registerEnableLiveData
+
+    private var _loadingLiveData = MutableLiveData<Boolean>()
+    val loadingLiveData: LiveData<Boolean> = _loadingLiveData
 
     fun validateEmail(text: String, isFocused: Boolean) {
         if (isFocused) {
@@ -42,6 +48,14 @@ class RegisterViewModel : ViewModel() {
     private fun enableContinue() {
         _registerEnableLiveData.value =
             _validateEmailLiveData.value == PatternMatcher.Matched && _validatePasswordLiveData.value == PatternMatcher.Matched
+    }
+
+    fun registerUser(email: String, pass: String) {
+        viewModelScope.launch {
+            _loadingLiveData.value = true
+            delay(4000)
+            _loadingLiveData.value = false
+        }
     }
 
     companion object {

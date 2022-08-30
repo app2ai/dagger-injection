@@ -50,6 +50,12 @@ class MainActivity : AppCompatActivity(), TextWatcher {
         rViewModel.registerEnableLiveData.observe(this) {
             binding.btnRegister.isEnabled = it
         }
+        rViewModel.loadingLiveData.observe(this) { isLoading ->
+            binding.btnRegister.apply {
+                isClickable = !isLoading
+                text = if (isLoading) "Loading..." else "Register"
+            }
+        }
     }
 
     // DI Step 3: Initialise views
@@ -59,6 +65,9 @@ class MainActivity : AppCompatActivity(), TextWatcher {
         }
         binding.etPass.addTextChangedListener(this)
         binding.etEmail.addTextChangedListener(this)
+        binding.btnRegister.setOnClickListener {
+            rViewModel.registerUser(binding.etEmail.text.toString(), binding.etPass.text.toString())
+        }
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
