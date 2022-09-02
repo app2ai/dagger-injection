@@ -7,6 +7,6 @@ class RegisterApplication : Application() {
         return UserRegistrationService(userRepository, emailService)
     }
 
-    val emailService = EmailService()
+    private val emailService = EmailService()
     private val userRepository = UserRepository()
 }
