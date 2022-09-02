@@ -4,11 +4,15 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class RegisterViewModel : ViewModel() {
+// DI applied
+class RegisterViewModel constructor(private val userRegSer : UserRegistrationService) : ViewModel() {
 
     private var _validateEmailLiveData = MutableLiveData<PatternMatcher>()
     val validateEmailLiveData: LiveData<PatternMatcher> = _validateEmailLiveData
@@ -21,8 +25,6 @@ class RegisterViewModel : ViewModel() {
 
     private var _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData
-
-    private val userRegService = UserRegistrationService()
 
     fun validateEmail(text: String, isFocused: Boolean) {
         if (isFocused) {
@@ -55,7 +57,7 @@ class RegisterViewModel : ViewModel() {
         viewModelScope.launch {
             _loadingLiveData.value = true
             delay(2500)
-            userRegService.registerUser(email, pass)
+            userRegSer.registerUser(email, pass)
             delay(1500)
             _loadingLiveData.value = false
         }
@@ -63,6 +65,13 @@ class RegisterViewModel : ViewModel() {
 
     companion object {
         const val MIN_PASSWORD_LENGTH = 6
+
+        val factory : ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val userRegistrationService = RegisterApplication().getUserRegistrationObject()
+                RegisterViewModel(userRegistrationService)
+            }
+        }
     }
 
     // classes for pattern identifier

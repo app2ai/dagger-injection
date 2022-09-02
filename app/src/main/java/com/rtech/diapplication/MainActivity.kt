@@ -6,12 +6,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.rtech.diapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), TextWatcher {
     lateinit var binding: ActivityMainBinding
-    private val rViewModel by viewModels<RegisterViewModel>()
+    private val rViewModel by viewModels<RegisterViewModel> {
+        RegisterViewModel.factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
