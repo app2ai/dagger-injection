@@ -1,7 +1,9 @@
 package com.rtech.diapplication
 
+import javax.inject.Inject
+
 // DI applied - Manual DI
-class UserRegistrationService constructor(
+class UserRegistrationService @Inject constructor(
     private val userRepository : UserRepository,
     private val emailService : EmailService
 ) {

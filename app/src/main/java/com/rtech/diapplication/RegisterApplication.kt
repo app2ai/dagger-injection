@@ -3,10 +3,8 @@ package com.rtech.diapplication
 import android.app.Application
 
 class RegisterApplication : Application() {
+    private val component = DaggerUserRegServiceComponent.builder().build()
     fun getUserRegistrationObject() : UserRegistrationService {
-        return UserRegistrationService(userRepository, emailService)
+        return component.getUserRegService()
     }
-
-    private val emailService = EmailService()
-    private val userRepository = UserRepository()
 }
