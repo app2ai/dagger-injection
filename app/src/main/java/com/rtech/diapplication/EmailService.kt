@@ -9,9 +9,20 @@ this class responsible for sending
 email after registration of user
 */
 
-class EmailService @Inject constructor(){
+interface NotificationService{
+    fun sendNotification(email: String)
+}
+
+class EmailService @Inject constructor() : NotificationService{
     private val TAG = "EmailService"
-    fun sendEmail(email: String) {
-        Log.d(TAG, "Email sent to: $email")
+    override fun sendNotification(email: String) {
+        Log.d(TAG, "Email sent")
+    }
+}
+
+class SMSService @Inject constructor() : NotificationService{
+    private val TAG = "SMSService"
+    override fun sendNotification(email: String) {
+        Log.d(TAG, "SMS sent")
     }
 }

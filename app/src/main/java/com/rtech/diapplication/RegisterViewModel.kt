@@ -66,10 +66,9 @@ class RegisterViewModel constructor(private val userRegSer : UserRegistrationSer
     companion object {
         const val MIN_PASSWORD_LENGTH = 6
 
-        val factory : ViewModelProvider.Factory = viewModelFactory {
+        fun factory(urs: UserRegistrationService) : ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val userRegistrationService = RegisterApplication().getUserRegistrationObject()
-                RegisterViewModel(userRegistrationService)
+                RegisterViewModel(urs)
             }
         }
     }

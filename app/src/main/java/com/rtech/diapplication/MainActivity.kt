@@ -4,20 +4,25 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.rtech.diapplication.databinding.ActivityMainBinding
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), TextWatcher {
-    lateinit var binding: ActivityMainBinding
+
+    @Inject lateinit var userRegistrationService: UserRegistrationService
+    private lateinit var binding: ActivityMainBinding
     private val rViewModel by viewModels<RegisterViewModel> {
-        RegisterViewModel.factory
+        RegisterViewModel.factory(userRegistrationService)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        DaggerUserRegServiceComponent.builder().build().injectViewObjects(this@MainActivity)
     }
 
     override fun onStart() {
@@ -67,6 +72,21 @@ class MainActivity : AppCompatActivity(), TextWatcher {
         binding.btnRegister.setOnClickListener {
             rViewModel.registerUser(binding.etEmail.text.toString(), binding.etPass.text.toString())
         }
+        binding.rgNotification.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener{
+            override fun onCheckedChanged(rg: RadioGroup?, pos: Int) {
+                when(pos) {
+                    0 -> {
+                        // Select sms as Notification
+                    }
+                    1 -> {
+                        // Select email as Notification
+                    }
+                    else -> {
+                        // No Notification
+                    }
+                }
+            }
+        })
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}

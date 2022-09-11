@@ -17,8 +17,13 @@ Dagger
 ------------------------------------
 
 Dagger Concept
-1. Consumer (@Inject)
+1. Consumer (@Inject)  e.g -> Activity, Fragment, Views
 2. Producer (@Module, @Provides, @Bind)
 3. Connector (@Component)
 ------------------------------------
+
+Type of Injection
+1. Constructor Injection
+2. Field Injection
+3. Method Injection
 

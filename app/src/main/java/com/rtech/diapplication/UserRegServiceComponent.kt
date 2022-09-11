@@ -4,5 +4,5 @@ import dagger.Component
 
 @Component
 interface UserRegServiceComponent {
-    fun getUserRegService() : UserRegistrationService
+    fun injectViewObjects(mainActivity: MainActivity)
 }
