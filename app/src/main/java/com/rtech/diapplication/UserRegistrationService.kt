@@ -1,14 +1,14 @@
 package com.rtech.diapplication
 
 import javax.inject.Inject
+import javax.inject.Named
 
-// DI applied - Manual DI
 class UserRegistrationService @Inject constructor(
     private val userRepository : UserRepository,
-    private val emailService : EmailService
+    @Named("Email") private val notificationService : NotificationService
 ) {
     fun registerUser(email: String, pass: String) {
         userRepository.addUser(email, pass)
-        emailService.sendEmail(email)
+        notificationService.sendNotification(email)
     }
 }

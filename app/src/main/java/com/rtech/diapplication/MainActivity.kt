@@ -61,6 +61,20 @@ class MainActivity : AppCompatActivity(), TextWatcher {
                 text = if (isLoading) "Loading..." else "Register"
             }
         }
+        rViewModel.notificationServiceLiveData.observe(this) {
+            when(it) {
+                0 -> {
+                    // Select sms as Notification
+
+                }
+                1 -> {
+                    // Select email as Notification
+                }
+                else -> {
+                    // No Notification
+                }
+            }
+        }
     }
 
     private fun initiateViews() {
@@ -74,17 +88,7 @@ class MainActivity : AppCompatActivity(), TextWatcher {
         }
         binding.rgNotification.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener{
             override fun onCheckedChanged(rg: RadioGroup?, pos: Int) {
-                when(pos) {
-                    0 -> {
-                        // Select sms as Notification
-                    }
-                    1 -> {
-                        // Select email as Notification
-                    }
-                    else -> {
-                        // No Notification
-                    }
-                }
+                rViewModel.selectedNotificationService(pos)
             }
         })
     }

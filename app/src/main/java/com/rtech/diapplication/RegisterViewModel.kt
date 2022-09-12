@@ -23,9 +23,15 @@ class RegisterViewModel constructor(private val userRegSer : UserRegistrationSer
     private var _registerEnableLiveData = MutableLiveData<Boolean>()
     val registerEnableLiveData: LiveData<Boolean> = _registerEnableLiveData
 
+    private var _notificationServiceLiveData = MutableLiveData<Int>()
+    val notificationServiceLiveData: LiveData<Int> = _notificationServiceLiveData
+
     private var _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData
 
+    fun selectedNotificationService(pos: Int) {
+        _notificationServiceLiveData.value = pos
+    }
     fun validateEmail(text: String, isFocused: Boolean) {
         if (isFocused) {
             if (Patterns.EMAIL_ADDRESS.matcher(text).matches()) {
